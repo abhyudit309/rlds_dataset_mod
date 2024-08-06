@@ -107,11 +107,13 @@ class ResizeAndJpegEncode(TfdsModFunction):
                             ),
                             step["observation"][key].dtype,
                         )
-                    else:
+                    elif "image" in key: # This can possibly take any non-depth key
                         step["observation"][key] = tf.cast(
                             dl.utils.resize_image(step["observation"][key], size),
                             tf.uint8,
                         )
+                    else:
+                        pass
             return step
 
         def episode_map_fn(episode):
